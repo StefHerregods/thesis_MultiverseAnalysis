@@ -6,7 +6,7 @@
 # Is main level of low validity item important?
 # Is main level of high validity items important?
 # Heat map should be with two separate colors, not continuous
-# Also add continous figure? Because maybe when bad, it's very bad (and when good, not such a big bonus)
+# Also add continuous figure? Because maybe when bad, it's very bad (and when good, not such a big bonus)
 
 
 # 1. Simulating data
