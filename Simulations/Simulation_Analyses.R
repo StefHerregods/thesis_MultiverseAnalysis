@@ -55,7 +55,10 @@ df3 <- filter(df, !(dv %in% outliers))
 ggplot(data = df, aes(x = sub_id, fill = resp)) + 
   geom_bar(position = "fill") +
   geom_hline(yintercept = 0.9) +
-  geom_hline(yintercept = 0.1)
+  geom_hline(yintercept = 0.1) +
+  xlab('subject identification number') +
+  ylab('Proportion left vs. right responses') +
+  labs(fill = 'Response')
 
 df4 <- filter(df, (resp_mean >= 0.1) & (resp_mean <= 0.9))
 df5 <- filter(df1, (resp_mean >= 0.1) & (resp_mean <= 0.9))
@@ -217,44 +220,88 @@ m13 <- lmer(dv ~ sub_cond * stim_version + X + (1 + stim_version|sub_id) + (1 + 
 m14 <- lmer(dv ~ sub_cond * stim_version + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df6, control = lmerControl(optimizer = "bobyqa"))
 m15 <- lmer(dv ~ sub_cond * stim_version + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df7, control = lmerControl(optimizer = "bobyqa"))
 
-# Adding IQ
-m16 <- lmer(dv ~ sub_cond * stim_version + IQ + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df, control = lmerControl(optimizer = "bobyqa"))
-m17 <- lmer(dv ~ sub_cond * stim_version + IQ + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df1, control = lmerControl(optimizer = "bobyqa"))
-m18 <- lmer(dv ~ sub_cond * stim_version + IQ + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df2, control = lmerControl(optimizer = "bobyqa"))
-m19 <- lmer(dv ~ sub_cond * stim_version + IQ + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df3, control = lmerControl(optimizer = "bobyqa"))
-m20 <- lmer(dv ~ sub_cond * stim_version + IQ + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df4, control = lmerControl(optimizer = "bobyqa"))
-m21 <- lmer(dv ~ sub_cond * stim_version + IQ + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df5, control = lmerControl(optimizer = "bobyqa"))
-m22 <- lmer(dv ~ sub_cond * stim_version + IQ + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df6, control = lmerControl(optimizer = "bobyqa"))
-m23 <- lmer(dv ~ sub_cond * stim_version + IQ + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df7, control = lmerControl(optimizer = "bobyqa"))
+# Adding Y
+m16 <- lmer(dv ~ sub_cond * stim_version + Y + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df, control = lmerControl(optimizer = "bobyqa"))
+m17 <- lmer(dv ~ sub_cond * stim_version + Y + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df1, control = lmerControl(optimizer = "bobyqa"))
+m18 <- lmer(dv ~ sub_cond * stim_version + Y + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df2, control = lmerControl(optimizer = "bobyqa"))
+m19 <- lmer(dv ~ sub_cond * stim_version + Y + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df3, control = lmerControl(optimizer = "bobyqa"))
+m20 <- lmer(dv ~ sub_cond * stim_version + Y + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df4, control = lmerControl(optimizer = "bobyqa"))
+m21 <- lmer(dv ~ sub_cond * stim_version + Y + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df5, control = lmerControl(optimizer = "bobyqa"))
+m22 <- lmer(dv ~ sub_cond * stim_version + Y + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df6, control = lmerControl(optimizer = "bobyqa"))
+m23 <- lmer(dv ~ sub_cond * stim_version + Y + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df7, control = lmerControl(optimizer = "bobyqa"))
 
-# Adding IQ and X
-m24 <- lmer(dv ~ sub_cond * stim_version + IQ + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df, control = lmerControl(optimizer = "bobyqa"))
-m25 <- lmer(dv ~ sub_cond * stim_version + IQ + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df1, control = lmerControl(optimizer = "bobyqa"))
-m26 <- lmer(dv ~ sub_cond * stim_version + IQ + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df2, control = lmerControl(optimizer = "bobyqa"))
-m27 <- lmer(dv ~ sub_cond * stim_version + IQ + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df3, control = lmerControl(optimizer = "bobyqa"))
-m28 <- lmer(dv ~ sub_cond * stim_version + IQ + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df4, control = lmerControl(optimizer = "bobyqa"))
-m29 <- lmer(dv ~ sub_cond * stim_version + IQ + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df5, control = lmerControl(optimizer = "bobyqa"))
-m30 <- lmer(dv ~ sub_cond * stim_version + IQ + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df6, control = lmerControl(optimizer = "bobyqa"))
-m31 <- lmer(dv ~ sub_cond * stim_version + IQ + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df7, control = lmerControl(optimizer = "bobyqa"))
+# Adding Y and X
+m24 <- lmer(dv ~ sub_cond * stim_version + Y + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df, control = lmerControl(optimizer = "bobyqa"))
+m25 <- lmer(dv ~ sub_cond * stim_version + Y + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df1, control = lmerControl(optimizer = "bobyqa"))
+m26 <- lmer(dv ~ sub_cond * stim_version + Y + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df2, control = lmerControl(optimizer = "bobyqa"))
+m27 <- lmer(dv ~ sub_cond * stim_version + Y + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df3, control = lmerControl(optimizer = "bobyqa"))
+m28 <- lmer(dv ~ sub_cond * stim_version + Y + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df4, control = lmerControl(optimizer = "bobyqa"))
+m29 <- lmer(dv ~ sub_cond * stim_version + Y + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df5, control = lmerControl(optimizer = "bobyqa"))
+m30 <- lmer(dv ~ sub_cond * stim_version + Y + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df6, control = lmerControl(optimizer = "bobyqa"))
+m31 <- lmer(dv ~ sub_cond * stim_version + Y + X + (1 + stim_version|sub_id) + (1 + stim_version * sub_cond|stim_id), data = df7, control = lmerControl(optimizer = "bobyqa"))
+
+
+### CREATING A DATAFRAME WITH ESTIMATED EFFECT SIZES AND P-VALUES PER MODEL ###
 
 intercept <- NULL
 sub_condhard <- NULL
 stim_versionincongruent <- NULL
+sub_condhard_p <- NULL
+stim_versionincongruent_p <- NULL
 models <- c(m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17, m18, m19, m20, m21, m22, m23, m24, m25, m26, m27, m28, m29, m30, m31)
 summary <- lapply(models, summary)
 outliers <- c('none', 'visual1', 'visual2', 'interquartile', 'none', 'visual1', 'visual2', 'interquartile', 'none', 'visual1', 'visual2', 'interquartile', 'none', 'visual1', 'visual2', 'interquartile', 'none', 'visual1', 'visual2', 'interquartile', 'none', 'visual1', 'visual2', 'interquartile', 'none', 'visual1', 'visual2', 'interquartile', 'none', 'visual1', 'visual2', 'interquartile')
 motivation_check <- c('no', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'yes')
 X <- c(0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
-IQ <- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+Y <- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 for (i in 1:32){
   intercept <- rbind(intercept, summary[[i]]$coefficients[1])
   sub_condhard <- rbind(sub_condhard, summary[[i]]$coefficients[2])
   stim_versionincongruent <- rbind(stim_versionincongruent, summary[[i]]$coefficients[1])
   #sub_condhard.stim_versionincongruent <- rbind(sub_condhard.stim_versionincongruent, summary[[i]]$coefficients[9])
+  if ((X[i] == 0) & (Y[i] == 0)){
+    sub_condhard_p <- rbind(sub_condhard_p, summary[[i]]$coefficients[18])
+    stim_versionincongruent_p <- rbind(stim_versionincongruent_p, summary[[i]]$coefficients[19])
+  } else if ((X[i] == 1) & (Y[i] == 0)){
+    sub_condhard_p <- rbind(sub_condhard_p, summary[[i]]$coefficients[22])
+    stim_versionincongruent_p <- rbind(stim_versionincongruent_p, summary[[i]]$coefficients[23])
+  } else if ((X[i] == 0) & (Y[i] == 1)){
+    sub_condhard_p <- rbind(sub_condhard_p, summary[[i]]$coefficients[22])
+    stim_versionincongruent_p <- rbind(stim_versionincongruent_p, summary[[i]]$coefficients[23])
+  } else if ((X[i] == 1) & (Y[i] == 1)){
+    sub_condhard_p <- rbind(sub_condhard_p, summary[[i]]$coefficients[26])
+    stim_versionincongruent_p <- rbind(stim_versionincongruent_p, summary[[i]]$coefficients[27])
+  }
 }
-full <- data.frame(outliers, motivation_check, X, IQ, intercept, sub_condhard, stim_versionincongruent)
+full <- data.frame(outliers, motivation_check, X, Y, intercept, sub_condhard, stim_versionincongruent, sub_condhard_p, stim_versionincongruent_p)
 
 save(m31, file = 'm31.rdata')
 
-confint(m0)
+
+# Plots to check data frame
+
+ggplot(full, aes(x=outliers, colour = motivation_check, y=sub_condhard_p, label=sub_condhard_p)) + 
+  geom_jitter(stat='identity', fill="black", size=4, alpha = 0.3, width = 0.2)  +
+  labs(title="P-values sub_condhard", 
+       color = 'motivation check') + 
+  ylim(0, 0.1) +
+  coord_flip() + 
+  theme_bw() + 
+  geom_hline(yintercept = 0.05, lty = 2) +
+  xlab('Dealing with outliers') +
+  ylab('P-values sub_condhard')
+
+ggplot(full, aes(x = as.factor(X), colour = as.factor(Y), y=sub_condhard_p, label=sub_condhard_p)) + 
+  geom_jitter(stat='identity', fill="black", size = 4, alpha = 0.3, width = 0.1)  +
+  labs(title="P-values variable 'sub_condhard'", 
+       color = 'Adding confounding variable Y') + 
+  ylim(0, 0.1) +
+  coord_flip() +
+  theme_bw() + 
+  geom_hline(yintercept = 0.05, lty = 2) +
+  xlab('Adding confounding variable X') +
+  ylab('P-values sub_condhard')
+
+
+
 
