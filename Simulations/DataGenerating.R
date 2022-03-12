@@ -36,8 +36,8 @@ stim_cond_version_sd <- 15  # SD for the stimuli's random slope for sub_cond:sti
 stim_i_cor <- -0.4  # Correlations between intercept and slopes
 stim_s_cor <- +0.2  # Correlations among slopes
 
-IQ_mean <- 100  # IQ mean 
-IQ_sd <- 15  # IQ sd
+Y_mean <- 100  # Y mean 
+Y_sd <- 15  # Y sd
 
 X_mean <- 0
 X_sd <- 100
@@ -126,12 +126,12 @@ ggplot(df, aes(x = sub_cond, y = dv, color = stim_version)) +
   geom_violin(alpha = 0.5) +
   geom_boxplot(width = 0.2, position = position_dodge(width = 0.9))
 
-# Add IQ as a related variable
+# Add Y as a related variable
 
-df$IQ <- NULL
+df$Y <- NULL
 for (i in unique(df$sub_id)){
   standardized <- (df$dv[df$sub_id == i] - mean(df$dv)) / sd(df$dv)
-  df$IQ[df$sub_id == i] <- round(rnorm(1, mean = standardized + IQ_mean, sd = IQ_sd))
+  df$Y[df$sub_id == i] <- round(rnorm(1, mean = standardized + Y_mean, sd = Y_sd))
 }
 
 # Add X as a confounding variable
