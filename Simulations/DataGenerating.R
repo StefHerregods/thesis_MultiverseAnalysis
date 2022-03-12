@@ -21,10 +21,10 @@ sub_sd <- 100  # SD for the subjects' random intercept
 stim_n  <- 50  # Number of stimuli in this simulation
 stim_sd <- 50  # SD for the stimuli's random intercept
 
-grand_i          <- 400  # Overall mean DV
+grand_i          <- 1000  # Overall mean DV
 sub_cond_eff     <- 50  # Mean difference between conditions: hard - easy
 stim_version_eff <- 50  # Mean difference between versions: incongruent - congruent
-cond_version_ixn <- 0  # Interaction between version and condition
+cond_version_ixn <- 0.7  # Interaction between version and condition
 error_sd         <- 25  # Residual (error) SD
 
 sub_version_sd <- 20  # Variation in size of effect of stim_version_eff
@@ -35,6 +35,12 @@ stim_cond_sd <- 30  # SD for the stimuli's random slope for sub_cond
 stim_cond_version_sd <- 15  # SD for the stimuli's random slope for sub_cond:stim_version
 stim_i_cor <- -0.4  # Correlations between intercept and slopes
 stim_s_cor <- +0.2  # Correlations among slopes
+
+IQ_mean <- 100  # IQ mean 
+IQ_sd <- 15  # IQ sd
+
+X_mean <- 0
+X_sd <- 100
 
 
 ### Random intercepts & slopes ###
@@ -120,9 +126,70 @@ ggplot(df, aes(x = sub_cond, y = dv, color = stim_version)) +
   geom_violin(alpha = 0.5) +
   geom_boxplot(width = 0.2, position = position_dodge(width = 0.9))
 
+# Add IQ as a related variable
+
+df$IQ <- NULL
+for (i in unique(df$sub_id)){
+  standardized <- (df$dv[df$sub_id == i] - mean(df$dv)) / sd(df$dv)
+  df$IQ[df$sub_id == i] <- round(rnorm(1, mean = standardized + IQ_mean, sd = IQ_sd))
+}
+
+# Add X as a confounding variable
+
+df$X <- NULL
+for (n in unique(df$sub_id)){
+  for (i in unique(df$stim_id)){
+    for (j in unique(df$stim_version)){
+      
+      df$X[(df$stim_id == i) & (df$stim_version == j) & (df$sub_id == n)] <- rnorm(1, X_mean + 10 * df$stim_version.e[(df$stim_id == i) & (df$stim_version == j) & (df$sub_id == n)], X_sd)
+      df$dv[(df$stim_id == i) & (df$stim_version == j) & (df$sub_id == n)] <- df$dv[(df$stim_id == i) & (df$stim_version == j) & (df$sub_id == n)] + df$X[(df$stim_id == i) & (df$stim_version == j) & (df$sub_id == n)] * rnorm(1, 0.5, 1)
+      
+    }
+  }
+}
+
+# Add random outliers
+
+for (i in 1:nrow(df)){
+  noise1 <- rnorm(1, mean = 1000, sd = 300)
+  while (noise1 < 0){
+    noise1 <- rnorm(1, mean = 1000, sd = 300)
+  }
+  noise2 <- rnorm(1, mean = 2000, sd = 300)
+  while (noise2 < 0){
+    noise2 <- rnorm(1, mean = 2000, sd = 300)
+  }
+  add_noise1 <- ifelse(runif(1,0,1) > 0.999, 1, 0)
+  add_noise2 <- ifelse(runif(1,0,1) > 0.9999, 1, 0)
+  df$dv[i] <- df$dv[i] + add_noise1 * noise1 + add_noise2 * noise2
+}
+
+# Left vs. right response
+
+df$resp <- NULL
+df$resp_mean <- NULL
+
+for (n in unique(df$sub_id)){
+  
+  mean <- runif(1, 0.1, 0.9)
+  
+  for (i in unique(df$stim_id)){
+    for (j in unique(df$stim_version)){
+      
+      df$resp[(df$stim_id == i) & (df$stim_version == j) & (df$sub_id == n)] <- ifelse(rbernoulli(1, p = mean), 'left', 'right')
+      
+    }
+  }
+  
+  df$resp_mean[df$sub_id == n] <- prop.table(table(df$resp[df$sub_id == n]))[1]
+}
+
+
+
 # Save data
 
 save(df, file = 'sim.rdata')
+
 
 ### Analysis (sense checks) ###
 
