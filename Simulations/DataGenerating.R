@@ -1,5 +1,4 @@
 # Simulates the data used in the multiverse analyses
-# Partially based on https://debruine.github.io/tutorials/sim-lmer.html
 
 setwd('C:\\Users\\herre\\OneDrive\\Documenten\\GitHub\\thesis_MultiverseAnalysis\\Simulations')
 rm(list = ls(all = TRUE))
