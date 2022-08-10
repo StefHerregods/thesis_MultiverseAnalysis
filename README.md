@@ -1,5 +1,5 @@
 # Multiverse Analysis in Practice: A Simulation-Based Scoping Review
-Includes all code used in my thesis for the Master of Psychology: Theory and Research (KU Leuven)  
+Includes all code used in my thesis for the Master of Psychology: Theory and Research (KU Leuven).  
 All code will be made public in order to promote the [Open Science movement](https://www.kuleuven.be/open-science).
 ## Thesis information:
 - Topic: Visualisations of multiverse analysis 
